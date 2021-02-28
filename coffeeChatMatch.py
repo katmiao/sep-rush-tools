@@ -97,11 +97,16 @@ def timetableTrial(trialMatrix):
 				trialMatrix[rusheeId][activeId] = 0
 				print("  failed :(")
 
-		print("rusheeTimeslots: {}\n\ntargetScore = {}\ntrialMatrix={}\n\ntodoRushees: {}\ncomebackto: {}\n".format(rusheeTimeslots, targetScore, trialMatrix, todoRushees, comebacktoRushees))
+		# print("rusheeTimeslots: {}\ntodoRushees: {}\ncomebacktoRushees: {}\n".format(rusheeTimeslots, todoRushees, comebacktoRushees))
 
-	print(trialMatrix)
-	print(rusheeTimeslots)
-	return (timetableScoreTotal, timetable)
+	# print(rusheeTimeslots)
+	timetableScoreTotal -= (25 * len(rusheeTimeslots))
+	for row in timetable:
+		for col in row:
+			if len(col) == 0:
+				timetableScoreTotal -= 15
+
+	return (timetableScoreTotal, timetable, rusheeTimeslots)
 
 	
 
@@ -176,25 +181,29 @@ print(np.matrix(matchScoreMatrix))
 matchScoreMatrix = np.array(matchScoreMatrix)
 
 maxActiveDoubleSlots = (numRushees % numActives) * numSlots / numActives
-maxRusheeDoubleSlots = (numRushees % numActives) * numSlots / numRushees
+maxRusheeDoubleSlots = (numRushees % numActives) * numSlots / numRushees + 1
 
 bestTimetable = None
 bestScore = -1
+bestRusheeTimeslots = None
 
 # the name of the game: randomize & optimize >:)
-for n in range(1):
+for n in range(100):
 
 	trialMatrix = copy.deepcopy(matchScoreMatrix)
-	timetableScore, timetable = timetableTrial(trialMatrix)
+	timetableScore, timetable, rusheeTimeslots = timetableTrial(trialMatrix)
 	if timetableScore > bestScore:
 		bestTimetable = timetable
 		bestScore = timetableScore
+		bestRusheeTimeslots = rusheeTimeslots
 
-	print("\ntimetableScore={}, new bestScore={}\n\n".format(timetableScore, bestScore))
+	print("timetableScore={}, new bestScore={}".format(timetableScore, bestScore))
 
 # bestTimetable = pandas.DataFrame(bestTimetable)
 
-print("bestScore = {}".format(bestScore))
+print("\n\nbestScore = {}".format(bestScore))
+print("remaining = {}".format(rusheeTimeslots))
+# print("remaining = {}".format({ rusheeIdMap[rusheeId]:slots for rusheeId, slots in rusheeTimeslots.items()}))
 # print(bestTimetable.head())
 for row in bestTimetable:
 	print(row)
@@ -209,6 +218,6 @@ def timetableForActives(timetable):
 		for i, slot in enumerate(row):
 			print("{}: {}".format(timeslotStrs[i], " & ".join(slot)))
 
-# timetableForActives(bestTimetable)
+timetableForActives(bestTimetable)
 
 
