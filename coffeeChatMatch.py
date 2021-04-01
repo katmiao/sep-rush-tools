@@ -14,8 +14,8 @@ activeMatchCounts = {}
 numRushees = 0
 numActives = 0
 matchScores = [5, 4, 3, 2, 1]
-numSlots = 4
-timeslotStrs = ["7:00-7:30PM", "7:30-8:00PM", "8:00-8:30PM", "8:30-9:00PM"]
+numSlots = 6
+timeslotStrs = ["7:00-7:20PM", "7:20-7:40PM", "7:40-8:00PM", "8:00-8:20PM", "8:20-8:40PM", "8:40-9:00PM", ]
 
 def timetableTrial(trialMatrix):
 	# reset everything for this trial
@@ -33,7 +33,7 @@ def timetableTrial(trialMatrix):
 	rusheeDoubleSlots = { i:0 for i in range(numRushees)}
 
 	# timetable structure: rows = actives, columns = timeslots
-	timetable = [[[] for a in range(4)] for b in range(numActives)]
+	timetable = [[[] for a in range(numSlots)] for b in range(numActives)]
 
 	# keep track of which rushees still need to be scheduled
 	todoRushees = list(range(numRushees))
@@ -41,7 +41,7 @@ def timetableTrial(trialMatrix):
 
 	# go thru match scores in descending order
 	for targetScore in matchScores:
-		print("\nTARGET SCORE = {}\n===================".format(targetScore))
+		# print("\nTARGET SCORE = {}\n===================".format(targetScore))
 		
 		todoRushees = todoRushees + comebacktoRushees
 		comebacktoRushees = []
@@ -95,7 +95,7 @@ def timetableTrial(trialMatrix):
 
 			if scheduled == False:
 				trialMatrix[rusheeId][activeId] = 0
-				print("  failed :(")
+				# print("  failed :(")
 
 		# print("rusheeTimeslots: {}\ntodoRushees: {}\ncomebacktoRushees: {}\n".format(rusheeTimeslots, todoRushees, comebacktoRushees))
 
@@ -137,15 +137,15 @@ with open('rusheeResponses.tsv', 'r') as csvfile:
 		yesActives = rusheeRow[1].split(", ")
 		noActives = rusheeRow[2].split(", ")
 
-		for active in yesActives:
-			activeId = activeIdMap[active]
-			matchScoreMatrix[i][activeId] += 1
+		if len(yesActives) > 0 and yesActives[0] != "":
+			for active in yesActives:
+				activeId = activeIdMap[active]
+				matchScoreMatrix[i][activeId] += 1
 
-		for active in noActives:
-			if active == "":
-				break
-			activeId = activeIdMap[active]
-			matchScoreMatrix[i][activeId] -= 1
+		if len(noActives) > 0 and noActives[0] != "":
+			for active in noActives:
+				activeId = activeIdMap[active]
+				matchScoreMatrix[i][activeId] -= 1
 
 		i += 1
 		numRushees += 1
@@ -162,26 +162,28 @@ with open('activeResponses.tsv', 'r') as csvfile:
 		noRushees = activeRow[2].split(", ")
 		# timeslots = activeRow[3].split(", ")
 
-		for rushee in yesRushees:
-			rusheeId = rusheeIdMap[rushee]
-			matchScoreMatrix[rusheeId][activeId] += 1
+		if len(yesRushees) > 0 and yesRushees[0] != "":
+			for rushee in yesRushees:
+				rusheeId = rusheeIdMap[rushee]
+				matchScoreMatrix[rusheeId][activeId] += 1
 
-		for rushee in noRushees:
-			if rushee == "":
-				break
-			rusheeId = rusheeIdMap[rushee]
-			matchScoreMatrix[rusheeId][activeId] -= 1
+		if len(noRushees) > 0 and noRushees[0] != "":
+			for rushee in noRushees:
+				rusheeId = rusheeIdMap[rushee]
+				matchScoreMatrix[rusheeId][activeId] -= 1
 
 
 # so now we have a 2D matrix with...
 # 	* rows = rushees
 # 	* columns = actives
 # 	* cell = match score (1 to 5)
-print(np.matrix(matchScoreMatrix))
+# print(np.matrix(matchScoreMatrix))
 matchScoreMatrix = np.array(matchScoreMatrix)
 
-maxActiveDoubleSlots = (numRushees % numActives) * numSlots / numActives
-maxRusheeDoubleSlots = (numRushees % numActives) * numSlots / numRushees + 1
+# maxActiveDoubleSlots = (numRushees % numActives) * numSlots / numActives
+# maxRusheeDoubleSlots = (numRushees % numActives) * numSlots / numRushees + 1
+maxActiveDoubleSlots = 1
+maxRusheeDoubleSlots = 1
 
 bestTimetable = None
 bestScore = -1
@@ -202,15 +204,13 @@ for n in range(100):
 # bestTimetable = pandas.DataFrame(bestTimetable)
 
 print("\n\nbestScore = {}".format(bestScore))
-print("remaining = {}".format(rusheeTimeslots))
-# print("remaining = {}".format({ rusheeIdMap[rusheeId]:slots for rusheeId, slots in rusheeTimeslots.items()}))
-# print(bestTimetable.head())
-for row in bestTimetable:
-	print(row)
+for rusheeId, slots in rusheeTimeslots.items():
+	print("unscheduled rusheeId={}: {}".format(rusheeIdMap[rusheeId], slots))
+# for row in bestTimetable:
+# 	print(row)
 
 activeNames = [name for name in activeIdMap if isinstance(name, str)]
 rusheeNames = [name for name in rusheeIdMap if isinstance(name, str)]
-# print(bestTimetable['Eli Pellot'].value_counts())
 
 def timetableForActives(timetable):
 	for activeId, row in enumerate(timetable):
