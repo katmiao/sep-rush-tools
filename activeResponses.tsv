@@ -1,19 +1,26 @@
-name	rushees you want to talk to	rushees you don't want to talk to
-Benny Zhang	Cynthia Gong, Kelly Nguyen, Britney Ly	Catherine Go, Rebeka Begashaw
-Emily Noronha	Tanmay Sahni, Judy He	Akshat Khaitan, Daniel Song
-Evelyn Luu	Callista Wu, Valentin Nguyen, Samhita Mallavarapu, Mingwei Zhu	Cynthia Gong, Hiya Gupta
-Luke Rivers	Cynthia Gong, Callista Wu, Eli Pellot	Judy He, Catherine Go
-Jay Mishra	Akshat Khaitan, Rebeka Begashaw, Kelly Nguyen, Valentin Nguyen, Kristen Fung, Cindy Yuan	Daniel Song
-Rachel Lu	Callista Wu, Rebeka Begashaw, Valentin Nguyen, Neha Bhagat	Brian Roysar, Akshat Khaitan
-Saumya Dedhia	Judy He, Alyse Schonfeld	Kelly Nguyen, Sierra Roberts
-Ronald Liu	Cynthia Gong, Valentin Nguyen	Henry Nguyen
-Tera Gilham	Rebeka Begashaw	Akshat Khaitan
-Cameron Miller	Callista Wu, Mingwei Zhu	Daniel Song, Sierra Roberts
-Andy Cai	Brian Roysar, Kelly Nguyen, Daniel Song	Tanmay Sahni
-Alexandra Li	Angela Pham, Eleanor Pae, Britney Ly	Alyse Schonfeld, Rebeka Begashaw
-Julia Tung	Henry Nguyen, Alyse Schonfeld	
-Rahul Natarajan	Valentin Nguyen	Mingwei Zhu
-Tera Gilham	Alyse Schonfeld	Judy He
-Toko Dougherty	Hiya Gupta, Mingwei Zhu	
-Kia Azar	Eli Pellot, Avnish Sengupta, Judy He, Vishal Narayan	
-Lucas Lee	Henry Nguyen, Lakshita Vij	Catherine Go
+Name	Choose 8-10 rushees you would like to talk to 	Any rushees you dont want to talk to?	Top 3 Rushees you would like to talk to 				Timestamp
+Felix Zhang	Chloe Lee, George Ma, Janny Gao, Mingwei Zhu, Natasha Cheung, Neal Agarwal, Pallavi Jayaraman, Shreesh Karjagi, Karen Li, Jessi Hu, Linda Wu, Zahra Keshwani		Natasha, Linda, Janny				4/1/2021 1:13:34
+Valentin Nguyen	George Ma, Janny Gao, Natasha Cheung, Rachel Kwan, Yusei Fujikura, Olivia An, Natalia Garcia Tang, Arya Goyal, Calvin Tran, Emily Ng, Sandra Ocampo, Zahra Keshwani	Bei Liu, Mingwei Zhu, Melissa Chen, Karen Li	Janny Gao, Sandra Ocampo, Rachel Kwan				4/1/2021 1:19:09
+Austin Pham	Natasha Cheung, Rachel Kwan, Olivia An, Karen Li, Jessi Hu, Dakota Edison, Angela Geng, Zahra Keshwani	Aditya Agarwal, Arnav Jain, Bei Liu, Chloe Lee, George Ma, Mingwei Zhu, Melissa Chen, Neal Agarwal, Prajapati Malayvardhan N, Shaurya Jain, Yusei Fujikura, Varun Patro, Pallavi Jayaraman, Shreesh Karjagi, Natalia Garcia Tang, Moises Sanchez, Keshav Nambiar, Avanish Jay Arun, Dylan Chen, Jacob John, Arya Goyal, Anushka Chakrabarti, Agrim Gupta, Calvin Tran, Emily Ng, Jessica Liu, Karan Khanna, Linda Wu, Manu Kumar, Sandra Ocampo, Sid Baphna, Soumya Uppuganti	Olivia An, Natasha Cheung, Jessi Hu				4/1/2021 1:23:24
+Karalyn Sawchuk	Aditya Agarwal, George Ma, Natasha Cheung, Neal Agarwal, Natalia Garcia Tang, Jessi Hu, Dakota Edison, Emily Ng, Zahra Keshwani	Mingwei Zhu, Melissa Chen, Prajapati Malayvardhan N, Pallavi Jayaraman, Keshav Nambiar, Anushka Chakrabarti, Agrim Gupta, Jessica Liu, Karan Khanna, Sid Baphna	Natasha, Jessi, Emily				4/1/2021 1:29:45
+Brian Roysar	Aditya Agarwal, Arnav Jain, Yusei Fujikura, Varun Patro, Angela Geng, Agrim Gupta, Emily Ng, Linda Wu, Zahra Keshwani		Aditya Agarwal, Zahra Keshwani, Emily Ng				4/1/2021 1:31:32
+Neeraj Samtani	Aditya Agarwal, Janny Gao, Mingwei Zhu, Shaurya Jain, Varun Patro, Pallavi Jayaraman, Olivia An, Calvin Tran, Zahra Keshwani	Arnav Jain, Chloe Lee, Natasha Cheung, Neal Agarwal, Prajapati Malayvardhan N, Shaurya Jain, Yusei Fujikura, Shreesh Karjagi, Keshav Nambiar, Karen Li, Avanish Jay Arun, Dakota Edison, Arya Goyal, Agrim Gupta, Karan Khanna, Manu Kumar, Sid Baphna, Soumya Uppuganti	Olivia An, Pallavi Jayaraman, Zahra Keshwani				4/1/2021 1:35:40
+Neha Bhongir	Melissa Chen, Neal Agarwal, Pallavi Jayaraman, Jacob John, Arya Goyal, Anushka Chakrabarti, Manu Kumar, Zahra Keshwani	Aditya Agarwal, Shaurya Jain	Shreesh Karjagi, Pallavi Jayaraman, Jacob John				4/1/2021 1:45:11
+Eleanor Pae	Janny Gao, Melissa Chen, Neal Agarwal, Yusei Fujikura, Shreesh Karjagi, Avanish Jay Arun, Dakota Edison, Arya Goyal, Zahra Keshwani	George Ma, Mingwei Zhu, Natasha Cheung, Rachel Kwan, Varun Patro, Pallavi Jayaraman, Olivia An, Keshav Nambiar, Karen Li, Dylan Chen, Jacob John, Anushka Chakrabarti, Emily Ng, Jessica Liu, Linda Wu, Sandra Ocampo	Neal, Arya, Dakota				4/1/2021 1:46:04
+Ringy Zhang	Shreesh Karjagi, Dakota Edison, Jacob John, Linda Wu, Soumya Uppuganti, Zahra Keshwani		Shreesh; Soumya; Jacob				4/1/2021 2:17:36
+Lucas Lee	Janny Gao, Natasha Cheung, Rachel Kwan, Natalia Garcia Tang, Moises Sanchez, Karen Li, Jessi Hu, Calvin Tran, Emily Ng, Sandra Ocampo	Aditya Agarwal, Mingwei Zhu, Prajapati Malayvardhan N, Shaurya Jain, Olivia An, Avanish Jay Arun, Anushka Chakrabarti, Jessica Liu	Janny Gao, Jessi Hu, Moises Sanchez, (Sandra Ocampo)				4/1/2021 2:33:39
+Kedar Gupta	George Ma, Natasha Cheung, Pallavi Jayaraman, Olivia An, Jessi Hu, Anushka Chakrabarti, Linda Wu	Aditya Agarwal, Angela Geng, Sid Baphna	anushka, pallavi, olivia				4/1/2021 2:57:01
+Hiya Gupta	George Ma, Mingwei Zhu, Natasha Cheung, Neal Agarwal, Varun Patro, Shreesh Karjagi, Olivia An, Dakota Edison, Jacob John		Jacob John, Neal Agarwal, Natasha Cheung				4/1/2021 3:02:22
+Victoria Kuang	Bei Liu, George Ma, Mingwei Zhu, Shreesh Karjagi, Natalia Garcia Tang, Avanish Jay Arun, Dakota Edison, Dylan Chen, Jacob John, Anushka Chakrabarti		Mingwei, Jay, and Anushka				4/1/2021 3:17:00
+Henry Nguyen	Arnav Jain, George Ma, Mingwei Zhu, Natasha Cheung, Olivia An, Moises Sanchez, Jessi Hu, Calvin Tran, Linda Wu		Mingwei, Natasha, Linda				4/1/2021 9:07:33
+Brian Chang	Aditya Agarwal, Mingwei Zhu, Natasha Cheung, Neal Agarwal, Dylan Chen, Jessica Liu, Manu Kumar, Zahra Keshwani		Mingwei, Natasha, Neal				4/1/2021 9:31:20
+Anne Shen	George Ma, Janny Gao, Mingwei Zhu, Melissa Chen, Natasha Cheung, Yusei Fujikura, Keshav Nambiar, Dylan Chen, Calvin Tran, Sandra Ocampo	Shaurya Jain, Jacob John, Soumya Uppuganti	Natasha, Calvin, Sandra 				4/1/2021 9:42:25
+Jenny Yoo	Chloe Lee, George Ma, Janny Gao, Mingwei Zhu, Melissa Chen, Varun Patro, Moises Sanchez, Sandra Ocampo, Soumya Uppuganti, Zahra Keshwani	Rachel Kwan, Shaurya Jain, Yusei Fujikura, Olivia An, Jessi Hu, Dakota Edison, Anushka Chakrabarti, Emily Ng, Jessica Liu, Sid Baphna	Sandra Ocampo, Chloe Lee, Janny Gao				4/1/2021 9:43:07
+Cindy Zheng	George Ma, Janny Gao, Mingwei Zhu, Yusei Fujikura, Shreesh Karjagi, Olivia An, Emily Ng, Zahra Keshwani		Janny Gao, Emily Ng, Yusei Fujikura				4/1/2021 9:52:51
+Rahul Natarajan	Neal Agarwal, Varun Patro, Pallavi Jayaraman, Olivia An, Jacob John, Anushka Chakrabarti, Angela Geng, Linda Wu, Zahra Keshwani	Janny Gao, Shaurya Jain, Soumya Uppuganti	Neal, Zahra, Jacob 				4/1/2021 10:07:15
+Karan Narang	George Ma, Mingwei Zhu, Yusei Fujikura, Dakota Edison, Jacob John, Arya Goyal, Emily Ng, Zahra Keshwani						4/1/2021 11:32:41
+Ronak Shah	Neal Agarwal, Rachel Kwan, Shreesh Karjagi, Avanish Jay Arun, Jacob John, Arya Goyal, Agrim Gupta, Linda Wu, Soumya Uppuganti, Zahra Keshwani		Dakota, Zahra, Linda				4/1/2021 11:38:12
+Abhishek Naik							4/1/2021 11:49:06
+Kat Miao	George Ma, Melissa Chen, Natasha Cheung, Neal Agarwal, Yusei Fujikura, Varun Patro, Pallavi Jayaraman, Olivia An, Jessi Hu, Dakota Edison, Jacob John, Arya Goyal, Manu Kumar, Soumya Uppuganti, Zahra Keshwani						4/1/2021 11:59:30
+Avnish Sengupta	Bei Liu, Janny Gao, Natasha Cheung, Rachel Kwan, Pallavi Jayaraman, Natalia Garcia Tang, Jacob John, Agrim Gupta						4/1/2021 12:00:25
+Emily Noronha	Neal Agarwal, Varun Patro, Dakota Edison, Jacob John, Zahra Keshwani		Zahra, Neal, Jacob				4/1/2021 12:02:46

@@ -10,6 +10,8 @@ import pandas
 matchScoreMatrix = []
 activeIdMap = {}
 rusheeIdMap = {}
+activeUnavailability = {}
+rusheeUnavailability = {}
 activeMatchCounts = {}
 numRushees = 0
 numActives = 0
@@ -20,6 +22,8 @@ timeslotStrs = ["7:00-7:20PM", "7:20-7:40PM", "7:40-8:00PM", "8:00-8:20PM", "8:2
 def timetableTrial(trialMatrix):
 	# reset everything for this trial
 	timetableScoreTotal = 0
+	matchscoreStats = {5:0, 4:0, 3:0, 2:0, 1:0}
+	chatCount = 0
 
 	# keep dict of arrays of timeslots each rushees must still be scheduled for
 	rusheeTimeslots = {}
@@ -27,6 +31,9 @@ def timetableTrial(trialMatrix):
 		shuffledSlots = [j for j in range(numSlots)]
 		random.shuffle(shuffledSlots) 
 		rusheeTimeslots[i] = shuffledSlots
+	for rusheeId, unavailableSlots in rusheeUnavailability.items():
+		for slot in unavailableSlots:
+			rusheeTimeslots[rusheeId].remove(slot)
 
 	# keep track of how many double slots each active/rushee has
 	activeDoubleSlots = { i:0 for i in range(numActives)}
@@ -34,6 +41,9 @@ def timetableTrial(trialMatrix):
 
 	# timetable structure: rows = actives, columns = timeslots
 	timetable = [[[] for a in range(numSlots)] for b in range(numActives)]
+	for activeId, unavailableSlots in activeUnavailability.items():
+		for slot in unavailableSlots:
+			timetable[activeId][slot].extend("x")
 
 	# keep track of which rushees still need to be scheduled
 	todoRushees = list(range(numRushees))
@@ -52,7 +62,7 @@ def timetableTrial(trialMatrix):
 			# choose a rushee at random, find all actives with the target match score
 			rusheeId = random.choice(todoRushees)
 			targetActiveIds = [activeId for activeId, score in enumerate(trialMatrix[rusheeId]) if score == targetScore]
-			print("- rushee {} ({}), targetActiveIds={}, available={}".format(rusheeId, rusheeIdMap[rusheeId], targetActiveIds, rusheeTimeslots[rusheeId]))
+			# print("- rushee {} ({}), targetActiveIds={}, available={}".format(rusheeId, rusheeIdMap[rusheeId], targetActiveIds, rusheeTimeslots[rusheeId]))
 
 			if len(targetActiveIds) == 0:
 				comebacktoRushees.append(rusheeId)
@@ -60,24 +70,33 @@ def timetableTrial(trialMatrix):
 				continue # if this rushee has no actives at this target score, skip and come back for lower target score
 
 			activeId = random.choice(targetActiveIds)
-			print("  trying active {} ({}), current schedule = {}".format(activeId, activeIdMap[activeId], timetable[activeId]))
+			# print("  trying active {} ({}), current schedule = {}".format(activeId, activeIdMap[activeId], timetable[activeId]))
 			scheduled = False
+			scheduledSlot = -1
 
 			# try to find a timeslot that the rushee and active have available 
 			for slot in rusheeTimeslots[rusheeId]:
-			
+
+				# actives may not be paired with more than 2 rushees at a time
 				if len(timetable[activeId][slot]) < 2:
+
+					# check if active is available
+					if len(timetable[activeId][slot]) == 1 and timetable[activeId][slot][0] == 'x':
+						continue
 
 					# if this would be a double slot, check to see if it doesn't exceed max double slots
 					if len(timetable[activeId][slot]) == 1 and (activeDoubleSlots[activeId] >= maxActiveDoubleSlots or rusheeDoubleSlots[rusheeIdMap[timetable[activeId][slot][0]]] > maxRusheeDoubleSlots or rusheeDoubleSlots[rusheeId] > maxRusheeDoubleSlots):
 						continue
 
 					# found a slot! add it to timetable, update the matchscore
+					scheduledSlot = slot
 					timetable[activeId][slot].extend(rusheeIdMap[rusheeId])
 					trialMatrix[rusheeId][activeId] = 6
 					timetableScoreTotal += targetScore
+					matchscoreStats[targetScore] += 1
+					chatCount += 1
 					scheduled = True
-					print("  success!!! new schedule = {}".format(timetable[activeId]))
+					# print("  success!!! new schedule = {}".format(timetable[activeId]))
 
 					# mark double slot if needed
 					if len(timetable[activeId][slot]) == 2:
@@ -85,13 +104,15 @@ def timetableTrial(trialMatrix):
 						rusheeDoubleSlots[rusheeIdMap[timetable[activeId][slot][0]]] += 1
 						rusheeDoubleSlots[rusheeId] += 1
 
-					# remove slot for the rushee
-					rusheeTimeslots[rusheeId].remove(slot)
-					if len(rusheeTimeslots[rusheeId]) == 0:
-						rusheeTimeslots.pop(rusheeId)
-						todoRushees.remove(rusheeId)
-
 					break
+
+			if scheduled == True:
+				# remove slot for the rushee
+				rusheeTimeslots[rusheeId].remove(scheduledSlot)
+				# print("removed {} for {}. remaining={}".format(scheduledSlot, rusheeIdMap[rusheeId], rusheeTimeslots[rusheeId]))
+				if len(rusheeTimeslots[rusheeId]) == 0:
+					rusheeTimeslots.pop(rusheeId)
+					todoRushees.remove(rusheeId)
 
 			if scheduled == False:
 				trialMatrix[rusheeId][activeId] = 0
@@ -99,14 +120,21 @@ def timetableTrial(trialMatrix):
 
 		# print("rusheeTimeslots: {}\ntodoRushees: {}\ncomebacktoRushees: {}\n".format(rusheeTimeslots, todoRushees, comebacktoRushees))
 
-	# print(rusheeTimeslots)
+	# deduct 25 points for every empty rushee slot, deduct 15 points for every empty active slot
 	timetableScoreTotal -= (25 * len(rusheeTimeslots))
 	for row in timetable:
 		for col in row:
 			if len(col) == 0:
 				timetableScoreTotal -= 15
 
-	return (timetableScoreTotal, timetable, rusheeTimeslots)
+	# returns:
+	# 1) final score for timetable
+	# 2) the timetable itself
+	# 3) the unscheduled rushee slots
+	# 4) the matchscore stats (count for each matchscore)
+	# 5) the avg matchscore
+	print(chatCount)
+	return (timetableScoreTotal, timetable, rusheeTimeslots, matchscoreStats, timetableScoreTotal/float(chatCount))
 
 	
 
@@ -172,6 +200,42 @@ with open('activeResponses.tsv', 'r') as csvfile:
 				rusheeId = rusheeIdMap[rushee]
 				matchScoreMatrix[rusheeId][activeId] -= 1
 
+# process active availability
+with open('activeAvailability.tsv', 'r') as csvfile:
+	activeReader = csv.reader(csvfile, delimiter='\t')
+	next(activeReader) # first row is header
+
+	for activeRow in activeReader:
+
+		activeId = activeIdMap[activeRow[0]]
+		unavailableSlots = activeRow[1].split(", ")
+		activeUnavailability[activeId] = []
+
+		if len(unavailableSlots) > 0 and unavailableSlots[0] != "":
+			for slot in unavailableSlots:
+				slotNum = int(slot)
+				activeUnavailability[activeId].append(slotNum)
+				
+print("activeUnavailability = {}".format(activeUnavailability))
+
+# process rushee availability
+with open('rusheeAvailability.tsv', 'r') as csvfile:
+	rusheeReader = csv.reader(csvfile, delimiter='\t')
+	next(rusheeReader) # first row is header
+
+	for rusheeRow in rusheeReader:
+
+		rusheeId = rusheeIdMap[rusheeRow[0]]
+		unavailableSlots = rusheeRow[1].split(", ")
+		rusheeUnavailability[rusheeId] = []
+
+		if len(unavailableSlots) > 0 and unavailableSlots[0] != "":
+			for slot in unavailableSlots:
+				slotNum = int(slot)
+				rusheeUnavailability[rusheeId].append(slotNum)
+				
+print("rusheeUnavailability = {}".format(rusheeUnavailability))
+
 
 # so now we have a 2D matrix with...
 # 	* rows = rushees
@@ -190,22 +254,24 @@ bestScore = -1
 bestRusheeTimeslots = None
 
 # the name of the game: randomize & optimize >:)
-for n in range(100):
-
+for n in range(1000):
+	print("\nTRIAL #{}".format(n))
 	trialMatrix = copy.deepcopy(matchScoreMatrix)
-	timetableScore, timetable, rusheeTimeslots = timetableTrial(trialMatrix)
+	timetableScore, timetable, rusheeTimeslots, matchscoreStats, matchscoreAvg = timetableTrial(trialMatrix)
 	if timetableScore > bestScore:
 		bestTimetable = timetable
 		bestScore = timetableScore
 		bestRusheeTimeslots = rusheeTimeslots
+		bestMatchscoreStats = matchscoreStats
+		bestMatchscoreAvg = matchscoreAvg
 
 	print("timetableScore={}, new bestScore={}".format(timetableScore, bestScore))
 
-# bestTimetable = pandas.DataFrame(bestTimetable)
-
 print("\n\nbestScore = {}".format(bestScore))
-for rusheeId, slots in rusheeTimeslots.items():
+for rusheeId, slots in bestRusheeTimeslots.items():
 	print("unscheduled rusheeId={}: {}".format(rusheeIdMap[rusheeId], slots))
+print("bestMatchscoreStats = {}".format(bestMatchscoreStats))
+print("bestMatchscoreAvg = {}".format(bestMatchscoreAvg))
 # for row in bestTimetable:
 # 	print(row)
 
